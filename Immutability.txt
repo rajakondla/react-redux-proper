@@ -1,0 +1,25 @@
+Immutability in Redux gives below benifits.
+1) Clarity
+2) Performance
+3) Awesome sauce
+
+1) Clarity
+We do not have to trace who changed the state, what line of code changed the state, beacuse the change of state logic resides in particular reducer not like traditional framwork where the state can be in multiple places and files.
+
+2) Performance
+If state is mutable, imagine you are having a big state object with many properties. Then redux have to compare each property value to old value which is very expensive operation.
+If state is immutable, redux will check whether the new state reference 
+pointing to old state reference. If equal it will not re-render component else re-render component. So easy to check state change.
+React-Redux also performance lot of optimization that rely on immutability.
+
+3) Awesome sauce
+Immutability give most interactive debugging experience. We can do time-travel debugging, undo/redo, turn-off individual actions, play interactions back.
+
+So how do you enforce immutability in development team.
+1) Trust.
+If the team is small, educate all to do immutability for state and in code review make sure immutability is there, if not it will introduce lots of bugs.
+2) redux-immutable-state-invariant library
+This library display error when you mutate state anywhere in your app. Be sure to run in development, beacuse it does lot of object copy which will decrease performance in production.
+3) Use of immutable libraries like Immer, Immutable.js, seamless-immutable etc.
+
+

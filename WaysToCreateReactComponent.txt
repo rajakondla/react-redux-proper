@@ -1,0 +1,52 @@
+1) React.createClass
+Basic approach to create class. Used when react was launched.
+2) ES Class
+ ES has build in class keyword.
+3) Function
+function component. React assumes the return statement is the render function. input parameter is props.
+4) Arrow function
+5) In modern JS, the var keyword is generally avoided. Instead use let or const
+6) For arrow function use const to avoid reassign.
+7) Prefer to use function component instead of class component for below reasons.
+   a) Easier to understand. No class constructor or extend keyword.
+   b) We can avoid this keyword which is difficult to understand. We can avoid binding too.
+   c) It creates less code than class component when transpile through babel. Leads to better performance.
+  d) High signal to voice ratio. Great code maximises signal to voice ratio. For simple component we can write single line of code avoiding return and parantheses. We can destructor the function.
+    
+    class UserClass extends React.component{
+        render()
+        {
+            const {message}=this.props;
+            return <div>{message}</div>;
+        }
+    }
+
+    const UserClass = ({message}) => <div>{message}</div>;
+
+ Here we are destructuring the props. If we do, all the data we use can be a function argument. Means improved code completion compare to class component.
+  e) easy to test. For assertion, we expect for this props this is the markup.
+  f) Performance is increased, as of react 16, no instance is created for component to wrap it.
+  g) class may be removed in future, with react hooks function can handle all use cases.
+
+When to use class and function.
+Pre 16.8, class contains state, refs, life cycle methods but function component does not have these features.
+After 16.8, with react hooks, we can use function componet for almost everything. useState for state, useEffect for life cycle methods, useRef for ref, useMemo for unnecessary re-render.
+After all this only componentDidError, getSnapshotBeforeUpdate will not be there in function component.
+
+Components are of two types
+1) Container (smart, stateful, controller view)
+a) concerned with behaviour, marshelling data and actions.
+b) Has little or no markup. 
+c) Think like backend for front end.
+d) Mainly concerned about passing data and actions to child components. 
+e) When working with redux, typically uses Redux connect function at the bottom of the file.
+f) Knows about redux
+g) often stateful
+
+2) Presentation (dumb, stateless, view)
+a) In contrast, this contain only markup. 
+b) Receive data and actions from container component via props.
+c) Doesn't know redux. Makes it resuable and easy to understand. They simply depend on props to display UI. Doesn't specify how data is loaded and mutated.
+d) often not stateful. Most of the components in redux apps should be presentational components.
+
+When you notice that some components don't use props they receive but merely forward them down...it's a good time to introduce some container components. (Dan Abramov)

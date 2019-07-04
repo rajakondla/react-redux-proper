@@ -1,0 +1,30 @@
+1) Redux store is immutable. Immutable means state cannot be changed directly and having immutable store makes debugging, support server rendering, undo and redo is possible.
+2) Actions triggers changes. When user clicks on submit button it triggers submit_contact_form action type.
+3) State changes are handled by functions called as Reducers. It accepts current state of an action and return new state.
+4) Flux and Redux follow uni-directional data flows.
+5) Flux and Redux have actions to change the state.
+6) They both have store concept that hold state, Flux have multiple store where as Redux have single store.
+7) Redux have new concetps like Reducers, Containers, Immutability.
+
+Flux vs Redux
+
+1) In Flux, store contains the state and state change logic
+2) In Redux, it follow single responsible. Store contains state, only the logic for state change will be maintained in Reducer.
+
+1) Flux have multiple store.
+2) Redux have single store. Have advantages like we do not have to maintain the same data in multiple stores. Handles complexity of interactions between stores.
+
+1) Flux stores are flat and disconnected.
+2) Redux with one store and hierarchial reducers. Reducers can be nested and gives composition just like React component composition.
+
+1) Flux have single dispatcher that passes down action to store.
+2) Redux have no dispatcher. The single store passes down the action to reducer using root reducer. Reducers are pure functions so we do not need event emitter pattern.
+
+1) In Flux, components subscribe to store using onchange and event emitter.
+2) IN Redux, container component subscribe to store using Redux connect.
+
+1) In Flux, State is mutable.
+2) In Redux, State is immutable.
+
+
+

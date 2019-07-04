@@ -1,0 +1,186 @@
+1) What is !DOCTYPE ?
+Basically, the DOCTYPE describes the version of the HTML that will be used in your page. Browsers also use the DOCTYPE to determine how to render a page. Not including a DOCTYPE or including an incorrect DOCTYPE can trigger quirks mode. The kicker here is that quirks mode in Internet Explorer is quite different from quirks mode in Firefox (and other browsers), meaning that you'll have a much harder job trying to ensure your page works consistently in all browsers if pages are rendered in quirks mode than you will if they are rendered in standards mode.
+
+2) Which is the preferred place to add js and css files ?
+Here's what happens when a browser loads a website with a <script> tag on it:
+Fetch the HTML page (e.g. index.html)
+Begin parsing the HTML
+The parser encounters a <script> tag referencing an external script file.
+The browser requests the script file. Meanwhile, the parser blocks and stops parsing the other HTML on your page.
+After some time the script is downloaded and subsequently executed.
+The parser continues parsing the rest of the HTML document.
+
+So solutions is to put script tag before </body> tag.This approach has its own problem: the browser cannot start downloading the scripts until the entire document is parsed. For larger websites with large scripts & stylesheets, being able to download the script as soon as possible is very important for performance. If your website doesn't load within 2 seconds, people will go to another website.
+In an optimal solution, the browser would start downloading your scripts as soon as possible, while at the same time parsing the rest of your document.
+Today, browsers support the async and defer attributes on scripts. These attributes tell the browser it's safe to continue parsing while the scripts are being downloaded.
+
+async
+<script type="text/javascript" src="path/to/script1.js" async></script>
+<script type="text/javascript" src="path/to/script2.js" async></script>
+Scripts with the async attribute are executed asynchronously. This means the script is executed as soon as it's downloaded, without blocking the browser in the meantime.
+This implies that it's possible to script 2 is downloaded & executed before script 1.
+
+defer
+<script type="text/javascript" src="path/to/script1.js" defer></script>
+<script type="text/javascript" src="path/to/script2.js" defer></script>
+Scripts with the defer attribute are executed in order (i.e. first script 1, then script 2). This also does not block the browser.
+
+Unlike async scripts, defer scripts are only executed after the entire document has been loaded.
+
+3) Nested Web page?
+<div id="links">
+  <a href="http://stuff.com" onclick="return go(this);">stuff</a>
+  <a href="http://www.fun.com" onclick="return go(this);">fun</a>
+  <a href="http://bing.com" onclick="return go(this);">bing</a>
+</div>
+<div id="container"></div>
+function go(obj) {
+    var page=obj.href;
+    document.getElementById('container').innerHTML='<object data="'+page+'" type="text/html"><embed src="'+page+'" type="text/html" /></object>';
+    return false;
+}
+AJAX
+-----
+document.getElementById('nav').onclick = function(){
+var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange=function()
+  {
+    if (xhr.readyState==4)
+    {
+        document.getElementById("page").innerHTML = xhr.response;
+
+    }
+  }
+  xhr.open("GET", "http://www.codecademy.com/", false);
+  xhr.send();    
+  }
+
+ 4) What is factory function?
+ When a function return a object is called a factory function. When we combine function and objects we can achieve composition.
+ function createJelly() {
+  return {
+    type: 'jelly',
+    colour: 'red'
+    scoops: 3
+  };
+}
+Parameterisez factory function.
+function createIceCream(flavour:"Vanilla") {
+  return {
+    type: 'icecream',
+    colour: 'red'
+    scoops: 3,
+    flavour
+  };
+}
+Composable factory function.
+function createDessert() {
+  return {
+    type: 'dessert',
+    bowl: [
+      createJelly(),
+      createIceCream()
+    ]
+  };
+}
+Inheritance in javascript.
+
+function Animal() {}; // This is the Animal *Type*
+Animal.prototype.eat = function () {
+    alert("All animals can eat!");
+};
+Animal.prototype.swim = function () {
+    alert("Some animals can swim!");
+};
+function Bird() {}; // Declaring a Bird *Type*
+Bird.prototype = new Animal(); // Birds inherit from Animal
+Bird.prototype.fly = function() {
+    alert("Birds are special, they can fly!");
+};
+var aBird = new Bird(); // Create an instance of the Bird Type
+aBird.eat(); // It should alert, so the inheritance worked
+aBird.fly(); // Important part of inheritance, Bird is also different to 
+Animal
+aBird.swim(); // a bird can swim which is wrong
+
+Composition in javascript using factory function.
+
+function eat()
+{
+    alert("All animals can eat!");
+}
+function swim()
+{
+    alert("Some animals can swim");
+}
+
+function Bird()
+{
+    var features {
+        eat()
+    }
+}
+
+var bird=Bird();
+console.log(bird.eat());
+
+5) Method chaining in javascript
+// define the class
+var Kitten = function() {
+  this.name = 'Garfield';
+  this.color = 'brown';
+  this.gender = 'male';
+};
+
+Kitten.prototype.setName = function(name) {
+  this.name = name;
+  return this;
+};
+
+Kitten.prototype.setColor = function(color) {
+  this.color = color;
+  return this;
+};
+
+Kitten.prototype.setGender = function(gender) {
+  this.gender = gender;
+  return this;
+};
+
+Kitten.prototype.save = function() {
+  console.log(
+    'saving ' + this.name + ', the ' +
+    this.color + ' ' + this.gender + ' kitten...'
+  );
+
+  return this;
+}
+
+var obj=new Kitten().setName("Raja").setColor("white").setGender("M");
+
+Closure
+--------
+
+With closure we can achieve encapsulation.
+
+var Person=function()
+{
+  var name="Raja Kondla";
+  return {
+    GetName:function()
+    {
+      return name;
+    }
+    SetName:function(value)
+    {
+      name=value;
+    }
+  }
+}();
+
+var val=Person.Name;
+console.log(Person.name);
+Console.log(val);
+
+
+

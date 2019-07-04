@@ -1,0 +1,34 @@
+1) React component produces HTML based on state and props. This will make testing easy.
+Different testing framework
+a) Jest is from facebook
+b) Mocha
+c) Jasmin
+d) Tape
+e) AVA
+
+Jest is a delightful javascript framework with focus on simplicity.
+Helper Libraries
+1) React Test Utils
+2) Enzyme
+3) React Testing Library
+
+React Test Utils specifically for React. Built by Facebook.
+React Test Utils has two rendering options
+1) shallowRender 
+a) render single component
+b) No DOM required
+c) Fast and simple
+
+2) renderIntoDocument
+a) Render component and child into DOM
+b) DOM required
+
+React Test Utils DOM interactions methods.
+1) findRenderedDOMComponentWithTag for finding an specific DOM element
+2) scryRenderedDOMComponentWithTag for finding element by tag name
+3) Simulate Clicks, Keypresses etc
+
+Enzyme is best alternative to React Test Utils as it have simple method names for finding an element like one find method for all above methods. 
+Enzyme uses React Test Utils behind the scenes.
+Enzyme uses JSDOM (in-memory DOM)
+Cheerio (Fast jQuery style selectors)

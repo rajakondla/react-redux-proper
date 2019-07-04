@@ -1,0 +1,15 @@
+1) Babel can be configured in .babelrc file or in package.json with "babel" section
+2) babel-preset-react-app transpiles JS and modern JS features like object spread, class properties, dynamic imports, and more to run in today's browser. 
+   This is the babel preset that create react-app uses.
+3) To automate the build process we use npm scripts
+4) eslint section explanation
+   a) extends will enable recommended rules for react, imports etc
+   b) babel-eslint to assure eslint understand our code
+   c) parserOptions version of ecma script, esmodules, jsx
+   d) env tells eslint to expect certain global variables. eslint ingore this variables
+   e) rules tells eslint not to throw error if we use these rules
+   f) settings react version "detect" required by eslint-plugin-react telling to detect the version of react automatically.
+      If not eslint-react-plugin throw error version not specified.
+   g) root:true this is the eslint config should used for this project. If there is any other config or files for eslint will be ignored.
+5) Webpack -> module -> rules -> use section will watch our files, recompile our code and run eslint when we hit save.
+   The run order is in bottom to top.

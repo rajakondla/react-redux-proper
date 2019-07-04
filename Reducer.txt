@@ -1,0 +1,14 @@
+Reducers must be pure functions. Below are forbidden in Reducers
+
+1) It should never mutate the arguments.
+2) It should not perform side effects like API calls, routing transactions.
+3) It should not call non-pure functions like Date.Now or Math.random. A reducer return value should solely depends on value of its parameters.
+
+There are multiple reducers for one store. If an action is dispatched all reducers will be fired. The switch statement inside each reducer check the action type and decides if it has anything to do. Each reducer will be passed the corresponding slice of state, so that it only manages that part of state.
+
+There is no need of one to one mapping between action and reducer.
+
+Write independent small reducer functions that are responsible to update specific slice of state. The reducer combined together with reducer composition.
+
+Each action can be handled my multiple reducers.
+Each reducer can be handled my multiple actions.

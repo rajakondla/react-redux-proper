@@ -1,0 +1,67 @@
+1) Action creater creates an action
+2) Store contains below actions.
+   store.dispatch(action), store.dispatch(listener), store.getState(),
+   replaceReducer(nextReducer). Store can only be changed by dispatching an action.
+
+Immutability
+-------------
+Number, string, Boolean, Undefined, NUll are immutable
+objects, arrays, functions are mutable.
+
+Immutable can be achieved using Object.assign, spread operator, immutable friendly array methods like map, filter, reduce.
+
+Object.assign({},state,{role:'admin'});
+first parameter should be empty, if not you are mutating state object.
+
+const newState={...state,role:'admin'};
+const newUser=[...state.users]; // for array
+
+Both object.assign, spread operator do shallow copy.
+
+const user={name:'Cory',address:{state:'California'}};
+const userCopy={...user} will not clone address object. This address object in userCopy still refers to user object. To address this issue you clone address object too.
+const UserCopy={...user,address:{...user.address}};
+
+Note: You should clone the nested object only if you need to modify the nested object. Cloning the nested object unnecessarily leads to re-render.
+
+Tools like clone-deep or loadash.merge does deep copy. But you avoid blindly deep copy because.
+1) deep copy is expensive. needlessly slows app down.
+2) deep copy typically wasteful. you only need to clone objects that has to be changed.
+3) deep copy causes unnecessary render. React thinks that everything changed perhaps only specific child object changed.
+So only clone specific sub object that has changed.
+
+Immer is one of the most immutable friendly library.
+import produce from "immer"
+const user={
+    name:"Raja",
+    address:{state:"Andhra Pradesh"}
+}
+const userCopy=produce(user,draftState=>{draftState.address.state="New York"})
+in above example, it looks like we are modifying user address object, but instead we are creating new object of user and modifying it.
+console.log(user.address.state) // Andhra Pradesh
+console.log(userCopy.state.address) // New York
+
+For handling immutability of arrays, we should avoid using push, pop, reverse. To use push and pop as immutable we should clone the existing array and use push and pop. So instead use map, filter, reduce, concat, spread as they create new array from existing array.
+
+React-Redux, connects React component to store. React-Redux is not exclusive to react. As react-redux only handles state, it can be used with angular, ember, knockout etc.
+
+It contains two functionality
+1) Provider - It is configured in app's root. Attaches app to store.
+2) Connect - It is configured in each container view. Creates container component.
+
+<Provider store={this.props.store}>
+  <App />
+</Provider>
+
+The provider component uses React's context to pull this off.
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorPage);
+mapStateToProps decides what state to pass to component.
+mapDispatchToProps decides what actions to pass to component.
+With redux, 
+1) You do not need to write subscribe unsubscribe code
+2) You can send what part of state you want to send to component. Not like Flux where entire state is available to component.
+3) Performance is increased as we will send what part of state you want to send to component. So, if that part of state changed only that component renders.
+
+Whenever component is updated mapStateToProps function is called. You should use memoizing library Reselect for expensive operation. Reselect caches the function calls. Reselect check the function is called with same parameter. If it does, it doesn't call the function, instead it just return the memorized value. So, if you are using expensive operation with mapStateToProps consider using memorized library.
+

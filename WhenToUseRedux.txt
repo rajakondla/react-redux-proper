@@ -1,0 +1,75 @@
+1) If your app is ultra simple use plain javascript.
+2) If you think plain javascript is painful, if there are interactivity forms, logic, reusable pieces, React is really useful.
+3) As dataflow becomes complex, we may find to display same data in multiple places, may have large number of potential state changes that are hard to manage. So in both the cases, we better manage data in single location for consistency, testablity.
+For this we are having two options 1) React context 2) React Redux
+Below is the bar for understanding
+
+plain JS      React       React context    React with Redux
+------------------------------------------------------------------------
+simple app                                                   complex app
+
+Imagine, there are two components that are using userdata. But those two components having common root parent which is the root. We can have API calls from each component, but the data may not be in sync. We can solve this with below solutions.
+
+1) So inorder to pass data to these two components, we have to put user data in root and pass it down to all child components. Child components do not use that userdata instead it passes down. This solves our problem, but creats prop drilling problem. Small and medium application ok to use.
+
+2) React context, create a global context variable as below
+
+const AppContext = React.createContext();
+
+const AppProvider =()=>{
+
+let state={
+    number:10
+}
+   return( 
+       <AppContext.Provider value={this.state}>
+         {this.props.children}
+       </AppContext.Provider>
+   );
+
+}
+
+const Child2=()=>{
+     <div>
+     <AppContext.Consumer>
+       {(context)=>context.number}
+     </AppContext.Consumer>
+     </div>
+}
+
+const Child1=()=>{
+    <div>
+       <Child2 />
+    </div>
+}
+
+const Parent =()=>{
+    return(
+        <AppProvider>
+           <AppContext.Consumer>
+             {(context)=>context.number}
+           </AppContext.Consumer>
+
+           <Child1 />
+        </AppProvider>
+    );
+}
+
+export default Parent;
+
+Above React context still need parent child relationship to use the context 
+
+3) Redux, in Redux there is centralised store like a local database. Any component can connect to this store via action, when action is dispatched store will be updated.
+
+Redux is used when there is complex data flows
+Redux is used for interaction between components, that doesn't have parent child relationship.
+Redux is used for non hierarchial data, means two seperate components manipulating same data, Redux can help.
+Redux is used if your application has lots of reads, write, deletes for complex data structure, Redux structuring and scalability is helpful.
+Redux is used for two seperate components having no parent child relationship and reading the same data.
+
+Finally, if you aren't sure if you need it, you don't need it. (Pete Hunt) 
+
+So suggestion would be.
+1) Start putting state in each component that require like container view.
+2) Lift state as needed. Lift state to common parent if more than one component need common data.
+3) Try React context or Redux if lifing state is painful or not scalable.
