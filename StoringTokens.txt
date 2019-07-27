@@ -1,0 +1,18 @@
+Cookies are vulnerable in cross site request forgery attack, when malicious website, email, or blog causes web browser to perform unwanted behaviour from a trusted site when user currently logged in. So storing 
+cookie in dedicated react app server in an HTTP only cookie with secure flag enabled is recommended approach.
+The benefit we get from HTTP only cookie is it helps protect from cross-site scripting, since such cookies cannot be accessed by javascript. Http only can only set by server, but still cookie travels from client and server, but cannot be read from javascript. This is why you have to generate cookies on a server. 
+
+cross site scripting eg:
+
+yoururl?ctn=<script type="javascript">alert("Hi")</script>
+
+suppose you want to display the user content from query string. If it is not HTML encoded, then the above script will get executed. suppose instead of alert there is a script to access localStorage of the browser. So display the content of user with HTML encoded. like &lt;script type=&quot;javascript&quot;&gt;alert(&quot;Hi&quot;)&lt;/script&gt; this will display the content, will not execute it.
+
+Auth0 recommends to store tokens in backend if a backend is present instead localStorage. Backend token handling can be done using Authorization code flow, Authorization code flow with proof key for code exchange or hybrid flow.
+
+SPA without backend, Auth0 recommends store in memory. In memory have some issuses like user have to login if they open in new tab or close their tab. This can be handled using silent auth.
+
+
+
+
+ 

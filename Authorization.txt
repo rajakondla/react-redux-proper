@@ -1,0 +1,60 @@
+API authorization can be of two types
+1) Single authorization token for all API URL in a app
+2) Seperate authorization token for each API URL
+
+JWT validation
+1) verify signature
+2) validate claims
+
+1) verify the JWT signature, AUTH0 uses JSON web key set  at a dedicated URL for your domain to validate the signature.
+eg: https://myreactapp-dev.eu.auth0.com/.well-known/jwks.json
+
+2) validate claims have 3 steps
+a) exp - expiration - expiration date should be future, if not validation fails
+b) iss - issued by - should contain the AUTH0 domain. While configuring our application we will give the domain.
+eg: myreactapp-dev.eu.auth0.com which we have given as domain in AUTH0 website.
+c) aud - audience - it should match with identifier when we have configured our API.
+
+OAuth 2 protocol allows you to share your information with other app without sharing your username and password.
+
+Each permission you grant is called a scope.
+
+Eg: 
+1) Linkdin asks your information. 
+2) You will give permission by clicking on google icon
+3) Google give access token to Linkdin. This token includes the scopes like read, edit , download, permanently delete our contacts
+4) Linkdin requests for contacts with access token provided.
+5) Google confirms access token has read:contacts scope or not. 
+6) Google sends the contacts if read scope is there.
+
+Above process happens via OAuth 2 protocol.
+
+Requests for Comments (RFC) published back in 1981, describes the Internet Protocol. It describes how it works, and provides pseudo-code, describing how the protocol should be implemented. In same way OAuth 2 is a standard way to implement authorization without you giving password.
+
+{
+  "given_name": "Raja",
+  "family_name": "Kondla",
+  "nickname": "rajakondla",
+  "name": "Raja Kondla",
+  "picture": "https://lh3.googleusercontent.com/-X8-98jzIla4/AAAAAAAAAAI/AAAAAAAAAJ8/sHxA7eZuJCU/photo.jpg",
+  "locale": "en",
+  "updated_at": "2019-07-18T04:44:36.105Z",
+  "email": "rajakondla@gmail.com",
+  "email_verified": true,
+  "iss": "https://myreactapp-dev.eu.auth0.com/",
+  "sub": "google-oauth2|115006906488978352691",
+  "aud": "F1u2xBzO91zb3kBFso3kJiiKWxjWoLNK",
+  "iat": 1563425076,
+  "exp": 1563461076,
+  "at_hash": "X8KLsj6wg6F95yuLAba-OQ",
+  "nonce": "SZ41b~0BXLj9QicJneCwwRKf-Um~F8Ul"
+}
+
+Different approaches for authorization
+1) Session cookies (Http only)
+2) scopes
+3) Rules
+
+1) Sessions cookies holds session id (bunch of unique random characters) created by server. Server fetch id from session cookie and check the database or in memory for authorization.
+2) Scopes. Create own custom scopes and assigned to different users and stored in a JWT. However scopes are designed sor specific use to access the third party data (from microsoft, google, facebook) on behalf of you. But you should not use for any application. For a typical ecommerce app, you have to create so many scopes like delete:product, add:product, update:product, add:price and so on. So in order to assign access to user, you have to assign all these scopes to user which will lead to lengthy JSON object. What if we want him to delete a product which he created only? we cannot do that with scopes
+3) Rules are different from scopes. Scopes asks permisson for third part data access. Rules assigns roles based on the user login. So a single rule can give total access to a site. So a small JSON object is created.

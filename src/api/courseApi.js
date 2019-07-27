@@ -22,3 +22,27 @@ export function deleteCourse(courseId) {
     .then(handleResponse)
     .catch(handleError);
 }
+
+export function getAPICourses() {
+  return fetch(process.env.NODE_API_URL + "/courses", {
+    headers: { Authorization: `Bearer ${window.auth.getAccessToken()}` }
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+export function getAPIAdmin() {
+  return fetch(process.env.NODE_API_URL + "/admin", {
+    headers: { Authorization: `Bearer ${window.auth.getAccessToken()}` }
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+// function getAccessToken() {
+//   const accessToken = localStorage.getItem("access_token");
+//   if (!accessToken) {
+//     throw new Error("No access token found");
+//   }
+//   return accessToken;
+// }

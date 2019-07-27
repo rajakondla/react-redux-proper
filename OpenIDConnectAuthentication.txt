@@ -1,0 +1,42 @@
+1) It solves the authentication problem.
+2) No user credientials required. Since user credentials exposes risks and can be misused.
+
+OpenID connect, provides authentication without managing password. It increses security by putting the user identity verification in the hands of expert like identity provider (microsoft, google, github, twitter, facebook)
+
+OAuth protocol uses HTTP to handle authorization
+OpenID connect sits on top of OAuth protocol for authentication. Below is the Layer for OpenID connect.
+
+OpenID connect
+-------
+OAuth protocol
+-------
+HTTP
+
+OpenID connect add three key items
+1) JWT token
+2) Userinfo endpoint
+3) Standard scopes (grant permissions)
+
+Auth0 provides OpenID connect.
+
+JWT, are token standard, used to pass important data using JSON. 
+JWT is a access token, used for authorization and info exchange, often contains user info
+Do not put secret data in the payload or the header unless the JWT encrypted.
+
+OpenID connect uses JWT identity token.
+OAuth uses JWT access token.
+
+JWT has three parts
+1) Header
+{"typ":"JWT" (type), "alg":"RS256" (Hash Algorithm), "kid":"NUY..." (key ID)}
+2) Body (user identity claims or info)
+{"sub":"12345","name":"John Doe",exp:12334567,iss:"https://myreactapp-dev.eu.auth0.com/"}
+3) Signature
+verifies the sender and assures the JWT is not tempered
+HMACSHA256(base64UrlEncode(header)+"."+base64UrlEncode(payload),your-secret)
+
+JWT token is base64 encoded. When we decode the JWT contains Header, Body, Signature
+
+JWT cannot be revoked not like cookies. As the request is from the browser so the lifespan of JWT is short. Auth0 default JWT to 10 hours.
+
+Verions used is auth0-js 9 and and Lock 11

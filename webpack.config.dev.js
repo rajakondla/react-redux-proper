@@ -30,7 +30,16 @@ module.exports = {
   plugins: [
     // webpack will replace process.env.API_URL with value specified . Here JSON.stringify is mandatory as webpack expectes value to be like this.
     new webpack.DefinePlugin({
-      "process.env.API_URL": JSON.stringify("http://localhost:3001")
+      "process.env.API_URL": JSON.stringify("http://localhost:3001"),
+      "process.env.AUTH0_DOMAIN": JSON.stringify("myreactapp-dev.eu.auth0.com"),
+      "process.env.AUTH0_CLIENT_ID": JSON.stringify(
+        "F1u2xBzO91zb3kBFso3kJiiKWxjWoLNK"
+      ),
+      "process.env.AUTH0_AUDIENCE": JSON.stringify("http://localhost:3002"),
+      "process.env.NODE_API_URL": JSON.stringify("http://localhost:3002"),
+      "process.env.AUTH0_CALLBACK_URL": JSON.stringify(
+        "http://localhost:3000/callback"
+      )
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",

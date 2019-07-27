@@ -1,0 +1,54 @@
+There are two popular authentication provider
+1) Auth0
+2) Ockta
+
+Auth0 provider have hard security, cutomizable, free for many app
+
+Auth0 is most popular security service provider
+
+Auth0 free tiers support 7000 active users.
+
+Auth0 is a security service provider. 
+Auth0 uses OAuth as a security protocol.
+
+OAuth is for authorization. What you are allowed to do.
+
+OAuth gives us access to third party data. Eg. Your app wants to access your google account basic information. With OAuth, you can ask the user for permission to access their data. In OAuth, we call permissions as scope. Scope is a string or key that denotes types of access to Google Drive, write access etc.
+
+OAuth is a authorization protocol. We can authorize a user without their password. Get info from third party.
+
+OAuth setup.
+1) Register your react app with identity service provider like Facebook, google, microsoft, twitter etc.
+2) Give your app name, website, callback url etc for register
+
+As we are using Auth0, we do not have to manually register. Auth0 will do that for us.
+
+OAuth has four key roles.
+1) Resource owner. user who are trying to login called resource owner.
+2) Client. App that wants to acces users account. User must give the permission to client to do so.
+3) Auth server. Handles auth and provides access tokens. Auth0 is the auth server.
+4) Resource server. API server that provides user data.
+
+OAuth flow.
+
+1) App requests user for auth grant permission
+2) User give the auth grant permission
+3) App send the auth grant permission to Auth0 server
+4) Auth0 send the access token to app
+5) App sends the access token to API server for user data.
+6) API server send the user data to the app
+
+We use implicit flow for SPA. (See the image OAuthFlowBasedOnClientType.png for more info)
+
+1) App directs the browser to the Auth0 sign-in. (giving different options for sign-in microsoft, google etc)
+2) Auth0 redirects to your app, at the callback URL you choose along with access and ID token as the hash fragment in the URL.
+3) App reads the token from the URL and stores the authentication data in the local storage
+
+OAuth Grant types
+1) Server side apps or Native app - authorization code
+2) Client side apps - Implicit 
+3) Trusted apps - Resource owner password credentials
+4) API access - credit credentials
+
+Single sign-on login approach is a single sign-on page for all apps. Google using this a single sign-in page for all google apps.
+

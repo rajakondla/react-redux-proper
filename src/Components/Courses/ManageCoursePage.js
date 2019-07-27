@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
  1) we are exporting the unconnected component which is useful for testing the component without the redux
  2) exporting the connecting the component with redux connect
 */
+
 export function ManageCoursePage({
   loadCourses,
   loadAuthors,
@@ -77,6 +78,7 @@ export function ManageCoursePage({
 
     if (!formIsValid()) return;
     setSaving(true);
+    alert(JSON.stringify(course));
     saveCourse(course)
       .then(() => {
         toast.success("Course saved.");

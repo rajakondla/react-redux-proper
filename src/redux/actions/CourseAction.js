@@ -23,6 +23,10 @@ export function deleteCourseOptimistic(course) {
   return { type: types.DELETE_COURSE_OPTIMISTIC, course };
 }
 
+export function loadAPIAdminSuccess(message) {
+  return { type: types.LOAD_ADMIN_SUCCESS, message };
+}
+
 // here thunks is used as middleware for making api calls.
 // benefit of using it is component can call anync actions as if they are calling sync actions. Component need not have to pass dispatch.
 export function loadCourses() {
@@ -83,5 +87,35 @@ export function deleteCourse(course) {
   return function(dispatch) {
     dispatch(deleteCourseOptimistic(course));
     return courseApi.deleteCourse(course.id);
+  };
+}
+
+export function loadAPICourses() {
+  return function(dispatch) {
+    dispatch(BeginAPICalls());
+    return courseApi
+      .getAPICourses()
+      .then(courses => {
+        dispatch(loadCoursesSuccess(courses));
+      })
+      .catch(error => {
+        dispatch(APIErrorCall());
+        throw error;
+      });
+  };
+}
+
+export function loadAPIAdmin() {
+  return function(dispatch) {
+    dispatch(BeginAPICalls());
+    return courseApi
+      .getAPIAdmin()
+      .then(res => {
+        dispatch(loadAPIAdminSuccess(res.message));
+      })
+      .catch(error => {
+        dispatch(APIErrorCall());
+        throw error;
+      });
   };
 }

@@ -13,3 +13,26 @@
    g) root:true this is the eslint config should used for this project. If there is any other config or files for eslint will be ignored.
 5) Webpack -> module -> rules -> use section will watch our files, recompile our code and run eslint when we hit save.
    The run order is in bottom to top.
+6) package.json -> scripts explanation. 
+  1) "start" run the start dev and start api keys.
+  2) "start-dev" run the webpack dev server using webpack.config.dev.js
+  3) "start:api" run the api 
+  4) "prestart:api" will run before the start api run automatically
+  5) "test" for running the test when save
+  6) "build" building the application using webpack.config.prod.js
+  7) "clean:build" uses rimraf package which is cross platform friendly way to delete files and make files
+  8) "test:ci" ci means contineous integration which runs the test without watch mode enabled. we will use this we cannot deploy an app with broken tests.
+  9) "prebuild" will run the clean:build and test:ci same time and if test fails the build will be stopped.
+  10) "serve:build" will run production build locally
+  11) "postbuild" to run something after build. 
+
+  Configure the web server to redirect all request to index.html. This way react router can handle all requests.
+
+  Add support for author administration. Be sure to not delete a author who has course
+  Filer to course list
+  Hide course list when empty
+  Unsaved changes message
+  Enhance validation
+  handle 404 on edit course (mapstatetoprops)
+  show no of courses on header (redux store)
+  Paging and sorting (mapstatetoprops)

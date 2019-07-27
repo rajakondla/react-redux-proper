@@ -18,6 +18,7 @@ class CoursesPage extends React.Component {
   // componentDidMount fires once the component mounted. when there is change in redux state mapStateToProps fires by then render method will only be called.
   componentDidMount() {
     const { courseActions, authorActions, courses, authors } = this.props;
+
     if (courses.length == 0) {
       courseActions.loadCourses().catch(error => {
         alert("error in courses load =>" + error);
@@ -52,7 +53,7 @@ class CoursesPage extends React.Component {
           /*
              here we need fragment syntax <> as JSX expectes one parent element for each expression.
              Prefer fragment over div if we do not need div, since fragment avoids creating needless elements in DOM.
-             */
+          */
           <>
             <button
               style={{ marginBottom: 20 }}
